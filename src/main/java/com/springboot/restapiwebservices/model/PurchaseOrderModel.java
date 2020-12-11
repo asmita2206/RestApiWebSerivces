@@ -1,6 +1,11 @@
 package com.springboot.restapiwebservices.model;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -10,9 +15,15 @@ public class PurchaseOrderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int purchaseOrderId;
+    @ApiModelProperty(required = true)
+    @NotNull
     private int projectId;
+    @ApiModelProperty(required = true)
+    @NotNull
     private long orderNumber;
     private Date orderDate;
+    @ApiModelProperty(required = true)
+    @NotNull
     private Date orderValidTillDate;
 
 

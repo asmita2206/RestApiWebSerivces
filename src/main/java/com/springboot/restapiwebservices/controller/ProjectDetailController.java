@@ -5,74 +5,91 @@ import com.springboot.restapiwebservices.model.CompanyDetailsModel;
 import com.springboot.restapiwebservices.model.ProjectContactModel;
 import com.springboot.restapiwebservices.model.ProjectDetailsModel;
 import com.springboot.restapiwebservices.repository.ProjectDetailRepo;
+import com.springboot.restapiwebservices.service.NoRecordFoundException;
+import com.springboot.restapiwebservices.service.ProjectDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/rest/ProjectDetails")
 public class ProjectDetailController {
 
     @Autowired
     ProjectDetailRepo projectDetailRepo;
+    @Autowired
+    ProjectDetailService projectDetailService;
 
-   /* @Autowired
-    ProjectContactController projectContactController;
-*/
-    @PostMapping("/saveDetails")
-    public String insertProjectDetails(@RequestBody ProjectDetailsModel projectDetailsModel) {
-
-        projectDetailRepo.save(projectDetailsModel);
+    @PostMapping
+    public String insertProjectDetails(@RequestBody @Valid List<ProjectDetailsModel> projectDetailsModel) {
+      try {
+        List<ProjectDetailsModel> projectDetailsModels=projectDetailService.insertProjectDetails(projectDetailsModel);
         return "your record is saved successfully !!";
+    }catch (Exception e){
+        new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return "{ProjectName} required !!";
     }
 
-    @GetMapping("/getAllDetails")
-    public List<ProjectDetailsModel> getAllDetails() {
-        return (List<ProjectDetailsModel>) projectDetailRepo.findAll();
+  }
+
+   /* @GetMapping("/{projectId}")
+    public ProjectDetailsModel getDetails(@PathVariable("projectId") UUID projectId) throws NoRecordFoundException {
+
+        return projectDetailService.getDetails(projectId);
     }
-
-    @GetMapping("/getByProjectId/{projectId}")
-    public List<ProjectDetailsModel> getDetails(@PathVariable("projectId") UUID projectId) {
-
-        return projectDetailRepo.findByProjectId(projectId);
-    }
-
-        @GetMapping("/getBycompanyId/{companyId}")
+*/
+        @GetMapping("/{companyId}")
         public List<ProjectDetailsModel> getDetailsby(@PathVariable("companyId")  int companyId) {
 
-            return projectDetailRepo.findByCompanyId(companyId);
-
+            return projectDetailService.getDetailsby(companyId);
 
         }
 
 
-    @DeleteMapping("deleteByProjectId/{projectId}")
-    public String deleteProjectDetails(@PathVariable("projectId") UUID projectId){
-     ProjectDetailsModel projectDetailsModel=projectDetailRepo.getOne(projectId);
+    @DeleteMapping("/{projectId}")
+    public String deleteProjectDetails(@PathVariable("projectId") UUID projectId) {
+        ProjectDetailsModel projectDetailsModels = projectDetailRepo.findByProjectId(projectId);
 
-        projectDetailRepo.delete(projectDetailsModel);
-        return "Your {projectId} record is deleted successfully !!";
+         if(projectDetailsModels!=null) {
+             projectDetailRepo.delete(projectDetailsModels);
+             return "Your {projectId} record is deleted successfully !!";
+         } else
+             return "Invalid {projectId}";
+
+
     }
 
 
-    @PutMapping("/updateProjectDetails")
-    public List<ProjectDetailsModel> saveOrupdateProjectDetails(@RequestBody List<ProjectDetailsModel> projectDetailsModels) {
-        projectDetailRepo.saveAll(projectDetailsModels);
-        return projectDetailsModels;
+    @PutMapping("/{companyId}")
+    public ResponseEntity<ProjectDetailsModel> updateOrsave(@PathVariable("companyId") int companyId, @Valid @RequestBody ProjectDetailsModel projectDetailsModel){
+        ProjectDetailsModel projectDetailsModel1=projectDetailRepo.findBycompanyId(companyId);
+        if(projectDetailsModel1!=null) {
+            projectDetailsModel1.setProjectName(projectDetailsModel.getProjectName());
+            projectDetailsModel1.setClientName(projectDetailsModel.getClientName());
+           // projectDetailsModel1.setProjectId(projectDetailsModel.getProjectId());
+            return new ResponseEntity<>(projectDetailRepo.save(projectDetailsModel1), HttpStatus.OK);
+        } else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/updateProjectByCompanyId/{companyId}")
-    public ProjectDetailsModel updateOrsave(@PathVariable("companyId") int companyId,@RequestBody ProjectDetailsModel projectDetailsModel){
+    @PutMapping("/update/{projectId}")
+    public ResponseEntity<ProjectDetailsModel> updateOrsaveBy(@PathVariable("projectId") UUID projectId,@Valid @RequestBody ProjectDetailsModel projectDetailsModel) {
+        ProjectDetailsModel projectDetailsModel1 = projectDetailRepo.findByProjectId(projectId);
 
-        return projectDetailRepo.save(projectDetailsModel);
+        if (projectDetailsModel1 != null) {
+            projectDetailsModel1.setProjectName(projectDetailsModel.getProjectName());
+            projectDetailsModel1.setClientName(projectDetailsModel.getClientName());
+            projectDetailsModel1.setCompanyId(projectDetailsModel.getCompanyId());
+            return new ResponseEntity<>(projectDetailRepo.save(projectDetailsModel1), HttpStatus.OK);
+
+        } else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    @PutMapping("/updateByProjectId/{projectId}")
-    public ProjectDetailsModel updateOrsaveBy(@PathVariable("projectId") UUID projectId,@RequestBody ProjectDetailsModel projectDetailsModel){
-
-        return projectDetailRepo.save(projectDetailsModel);
-    }
-
 }

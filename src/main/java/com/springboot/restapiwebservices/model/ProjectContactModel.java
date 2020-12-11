@@ -1,9 +1,12 @@
 package com.springboot.restapiwebservices.model;
 
 import com.springboot.restapiwebservices.ProjectDetailsId;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
@@ -13,10 +16,15 @@ public class ProjectContactModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int projectContactId;
-
+    @ApiModelProperty(required = true)
+    @NotNull
     private int projectId;
     private String contactName;
+    @ApiModelProperty(required = true)
+    @NotNull
     private long contactNumber;
+    @ApiModelProperty(required = true)
+    @NotNull
     private String contactEmail;
     private String contactType;
 
@@ -91,4 +99,6 @@ public class ProjectContactModel {
                 ", contactType='" + contactType + '\'' +
                 '}';
     }
+
+
 }

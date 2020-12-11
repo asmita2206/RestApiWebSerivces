@@ -1,10 +1,13 @@
 package com.springboot.restapiwebservices.model;
 
 import com.springboot.restapiwebservices.ProjectDetailsId;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
@@ -14,18 +17,17 @@ import java.util.UUID;
 public class ProjectDetailsModel {
 
     @Id
-    @GenericGenerator(name = "uuid1",strategy = "org.hibernate.id.UUIDGenerator")
+  /*  @GenericGenerator(name = "uuid1",strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "uuid1")
-    @Column(name = "projectId",updatable = false,nullable = false)
+    @Column(name = "projectId",updatable = false,nullable = false)*/
    // @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID projectId;
+    private String projectId;
     @Id
-    @GenericGenerator(name = "uuid2",strategy = "org.hibernate.id.UUIDGenerator")
-    @GeneratedValue(generator = "uuid2")
-    @Column(name = "clientId",updatable = false,nullable = false)
-    private UUID clientId;
-
+    private String clientId;
+    @ApiModelProperty(required = true)
     private int companyId;
+    @ApiModelProperty(required = true)
+    @NotNull
     private String projectName;
     private String clientName;
 
@@ -33,7 +35,7 @@ public class ProjectDetailsModel {
     public ProjectDetailsModel() {
     }
 
-    public ProjectDetailsModel(UUID projectId, UUID clientId, int companyId, String projectName, String clientName) {
+    public ProjectDetailsModel(String projectId, String clientId, int companyId, String projectName, String clientName) {
         this.projectId = projectId;
         this.clientId = clientId;
         this.companyId = companyId;
@@ -41,19 +43,19 @@ public class ProjectDetailsModel {
         this.clientName = clientName;
     }
 
-    public UUID getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(UUID projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 
-    public UUID getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(UUID clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 

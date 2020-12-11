@@ -10,4 +10,6 @@ import java.util.List;
 public interface ProjectContactRepo extends JpaRepository<ProjectContactModel,Integer> {
 
     List<ProjectContactModel> findByProjectId(int projectId);
+    ProjectContactModel findByprojectId(int projectId);
+    ProjectContactModel findByProjectContactId(int projectContactId);
 }

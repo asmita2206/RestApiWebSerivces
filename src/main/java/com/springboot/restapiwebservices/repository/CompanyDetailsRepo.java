@@ -5,9 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface CompanyDetailsRepo extends JpaRepository<CompanyDetailsModel,Integer> {
+public interface CompanyDetailsRepo extends JpaRepository<CompanyDetailsModel,String> {
 
-    List<CompanyDetailsModel> findByCompanyId(int companyId);
+  CompanyDetailsModel findBycompanyId(String companyId);
+  List<CompanyDetailsModel> findByCompanyId(String companyId);
+
 }

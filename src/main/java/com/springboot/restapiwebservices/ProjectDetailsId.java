@@ -7,13 +7,13 @@ import java.util.UUID;
 
 public class ProjectDetailsId implements Serializable {
 
-    private UUID clientId;
-    private UUID projectId;
+    private String clientId;
+    private String projectId;
 
     public ProjectDetailsId() {
     }
 
-    public ProjectDetailsId(UUID clientId, UUID projectId) {
+    public ProjectDetailsId(String clientId, String projectId) {
         this.clientId = clientId;
         this.projectId = projectId;
     }

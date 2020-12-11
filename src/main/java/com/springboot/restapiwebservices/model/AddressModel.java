@@ -1,8 +1,14 @@
 package com.springboot.restapiwebservices.model;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
+
 @Table(name = "address_tbl")
 public class AddressModel {
 
@@ -10,11 +16,17 @@ public class AddressModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "address_id")
     private int addressId;
+    @ApiModelProperty(required = true)
+    @NotNull
     private int projectId;
+    @ApiModelProperty(required = true)
+    @NotNull
     private String addressType;
     private String line1;
     private String line2;
     private String line3;
+    @ApiModelProperty(required = true)
+    @NotNull
     private long pincode;
 
     public AddressModel() {

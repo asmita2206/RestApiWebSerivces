@@ -10,4 +10,6 @@ import java.util.List;
 public interface AddressRepo extends JpaRepository<AddressModel,Integer> {
 
     List<AddressModel> findByProjectId(int projectId);
+    AddressModel findByprojectId(int projectId);
+    AddressModel findByAddressId(int addressId);
 }
