@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface AddressRepo extends JpaRepository<AddressModel,Integer> {
 
-    List<AddressModel> findByProjectId(int projectId);
-    AddressModel findByprojectId(int projectId);
+    List<AddressModel> findByProjectId(String projectId);
+    AddressModel findByprojectId(String projectId);
     AddressModel findByAddressId(int addressId);
 }

@@ -3,8 +3,9 @@ package com.springboot.restapiwebservices.api.controller;
 
 import com.springboot.restapiwebservices.model.ProjectContactModel;
 import com.springboot.restapiwebservices.repository.ProjectContactRepo;
+import com.springboot.restapiwebservices.api.controller.request.ProjectContactRequest;
 import com.springboot.restapiwebservices.service.ProjectContactService;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,77 +16,54 @@ import java.util.List;
 @RequestMapping("/rest/ProjectContact")
 public class ProjectContactController {
 
+    @Autowired
     ProjectContactRepo projectContactRepo;
+    @Autowired
     ProjectContactService projectContactService;
 
     @PostMapping
-    public String insertProjectContact(@RequestBody @Valid List<ProjectContactModel> projectContactModel) {
-        try {
-            List<ProjectContactModel> projectContactModels = projectContactService.insertProjectContact(projectContactModel);
-            return "your record is saved successfully !!";
-        }catch (Exception e){
-            new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            return "{projectId} ,{contactNumber},{contactEmail} required !!";
-        }
+    public ProjectContactModel insertProjectContact(@RequestBody @Valid ProjectContactRequest projectContactRequest) {
 
+            ProjectContactModel projectContactModels = projectContactService.insertProjectContact(projectContactRequest);
+         return projectContactModels;
     }
 
 
-    @GetMapping("/{projectId}")
-    public List<ProjectContactModel> getContactDetails(@PathVariable("projectId")  int projectId) {
+    @GetMapping("/get/{projectId}")
+    public List<ProjectContactModel> getContactDetails(@PathVariable("projectId") String projectId) {
 
         return projectContactService.getContactDetails(projectId);
 
 
     }
-    /*@GetMapping("/{projectContactId}")
+    @GetMapping("/{projectContactId}")
     public ProjectContactModel getContactDetailsById(@PathVariable("projectContactId")  int projectContactId)  {
 
         return projectContactService.getContactDetailsById(projectContactId);
     }
-*/
+
     @DeleteMapping("deleteByContactId/{projectContactId}")
     public String deleteProjectContact(@PathVariable("projectContactId") int projectContactId){
 
-        ProjectContactModel projectContactModel=projectContactRepo.findByProjectContactId(projectContactId);
-        if(projectContactModel!=null) {
-            projectContactRepo.delete(projectContactModel);
-            return "Your {projectContactId} record is deleted successfully !!";
+          projectContactService.deleteProjectContact(projectContactId);
+          return "Your {projectContactId} record is deleted successfully !!";
+
         }
-        else
-
-            return "Invalid {projectContactId}";
-
-    }
-
 
     @PutMapping("/update/{projectContactId}")
-    public ResponseEntity< ProjectContactModel> updateOrsave(@PathVariable("projectContactId") int projectContactId,@Valid @RequestBody ProjectContactModel projectContactModel){
-        ProjectContactModel projectContactModel1=projectContactRepo.findByProjectContactId(projectContactId);
+    public ResponseEntity< ProjectContactModel> updateOrsave(@PathVariable("projectContactId") int projectContactId,@Valid @RequestBody ProjectContactRequest projectContactRequest){
 
-      if(projectContactModel1!=null) {
-          projectContactModel1.setContactEmail(projectContactModel.getContactEmail());
-          projectContactModel1.setContactName(projectContactModel.getContactName());
-          projectContactModel1.setContactNumber(projectContactModel.getContactNumber());
-          projectContactModel1.setContactType(projectContactModel.getContactType());
-          projectContactModel1.setProjectId(projectContactModel.getProjectId());
-          return new ResponseEntity<>(projectContactRepo.save(projectContactModel1), HttpStatus.OK);
-      }else
-          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ResponseEntity <ProjectContactModel> projectContactModel1=projectContactService.updateOrsave(projectContactId,projectContactRequest);
+        return projectContactModel1;
+
     }
 
     @PutMapping("/{projectId}")
-    public ResponseEntity<ProjectContactModel> updateOrsaveBy(@PathVariable("projectId") int projectId, @RequestBody ProjectContactModel projectContactModel){
-     ProjectContactModel projectContactModel1=projectContactRepo.findByprojectId(projectId);
-     if(projectContactModel1!=null) {
-         projectContactModel1.setContactEmail(projectContactModel.getContactEmail());
-         projectContactModel1.setContactName(projectContactModel.getContactName());
-         projectContactModel1.setContactNumber(projectContactModel.getContactNumber());
-         projectContactModel1.setContactType(projectContactModel.getContactType());
-        // projectContactModel1.setProjectId(projectContactModel.getProjectId());
-         return new ResponseEntity<>(projectContactRepo.save(projectContactModel1), HttpStatus.OK);
-     } else
-         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ProjectContactModel> updateOrsaveBy(@PathVariable("projectId") String projectId, @RequestBody ProjectContactRequest projectContactRequest){
+
+        ResponseEntity <ProjectContactModel> projectContactModel1=projectContactService.updateOrsaveBy(projectId,projectContactRequest);
+        return projectContactModel1;
+
     }
 
 }

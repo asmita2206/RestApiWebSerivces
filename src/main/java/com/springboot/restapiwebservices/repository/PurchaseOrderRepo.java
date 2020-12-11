@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface PurchaseOrderRepo extends JpaRepository<PurchaseOrderModel,Integer> {
 
-    List<PurchaseOrderModel> findByProjectId(int projectId);
-    PurchaseOrderModel findByprojectId(int projectId);
-    PurchaseOrderModel findByPurchaseOrderId(int purchaseOrderId);
+    List<PurchaseOrderModel> findByProjectId(String projectId);
+    PurchaseOrderModel findByprojectId(String projectId);
+    Optional<PurchaseOrderModel> findByPurchaseOrderId(int purchaseOrderId);
 }

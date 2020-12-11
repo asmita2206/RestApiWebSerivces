@@ -24,8 +24,9 @@ public class ProjectDetailsModel {
     private String projectId;
     @Id
     private String clientId;
-    @ApiModelProperty(required = true)
-    private int companyId;
+   // @ApiModelProperty(required = true)
+
+    private String companyId;
     @ApiModelProperty(required = true)
     @NotNull
     private String projectName;
@@ -35,7 +36,7 @@ public class ProjectDetailsModel {
     public ProjectDetailsModel() {
     }
 
-    public ProjectDetailsModel(String projectId, String clientId, int companyId, String projectName, String clientName) {
+    public ProjectDetailsModel(String projectId, String clientId, String companyId, String projectName, String clientName) {
         this.projectId = projectId;
         this.clientId = clientId;
         this.companyId = companyId;
@@ -59,11 +60,11 @@ public class ProjectDetailsModel {
         this.clientId = clientId;
     }
 
-    public int getCompanyId() {
+    public String getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(int companyId) {
+    public void setCompanyId(String companyId) {
         this.companyId = companyId;
     }
 

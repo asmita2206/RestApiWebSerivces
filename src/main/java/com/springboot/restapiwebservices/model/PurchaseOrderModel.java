@@ -1,5 +1,6 @@
 package com.springboot.restapiwebservices.model;
 
+import com.springboot.restapiwebservices.constants.StringConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -17,7 +18,7 @@ public class PurchaseOrderModel {
     private int purchaseOrderId;
     @ApiModelProperty(required = true)
     @NotNull
-    private int projectId;
+    private String projectId;
     @ApiModelProperty(required = true)
     @NotNull
     private long orderNumber;
@@ -30,7 +31,7 @@ public class PurchaseOrderModel {
     public PurchaseOrderModel() {
     }
 
-    public PurchaseOrderModel(int purchaseOrderId, int projectId, long orderNumber, Date orderDate, Date orderValidTillDate) {
+    public PurchaseOrderModel(int purchaseOrderId, String projectId, long orderNumber, Date orderDate, Date orderValidTillDate) {
         this.purchaseOrderId = purchaseOrderId;
         this.projectId = projectId;
         this.orderNumber = orderNumber;
@@ -46,11 +47,11 @@ public class PurchaseOrderModel {
         this.purchaseOrderId = purchaseOrderId;
     }
 
-    public int getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 

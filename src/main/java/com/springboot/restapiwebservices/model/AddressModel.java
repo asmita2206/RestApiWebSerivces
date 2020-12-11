@@ -18,7 +18,7 @@ public class AddressModel {
     private int addressId;
     @ApiModelProperty(required = true)
     @NotNull
-    private int projectId;
+    private String projectId;
     @ApiModelProperty(required = true)
     @NotNull
     private String addressType;
@@ -32,7 +32,7 @@ public class AddressModel {
     public AddressModel() {
     }
 
-    public AddressModel(int addressId, int projectId, String addressType, String line1, String line2, String line3, long pincode) {
+    public AddressModel(int addressId, String projectId, String addressType, String line1, String line2, String line3, long pincode) {
         this.addressId = addressId;
         this.projectId = projectId;
         this.addressType = addressType;
@@ -90,11 +90,11 @@ public class AddressModel {
         this.pincode = pincode;
     }
 
-    public int getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 

@@ -18,7 +18,7 @@ public class ProjectContactModel {
     private int projectContactId;
     @ApiModelProperty(required = true)
     @NotNull
-    private int projectId;
+    private String projectId;
     private String contactName;
     @ApiModelProperty(required = true)
     @NotNull
@@ -31,7 +31,7 @@ public class ProjectContactModel {
     public ProjectContactModel() {
     }
 
-    public ProjectContactModel(int projectContactId, int projectId, String contactName, long contactNumber, String contactEmail, String contactType) {
+    public ProjectContactModel(int projectContactId, String projectId, String contactName, long contactNumber, String contactEmail, String contactType) {
         this.projectContactId = projectContactId;
         this.projectId = projectId;
         this.contactName = contactName;
@@ -48,11 +48,11 @@ public class ProjectContactModel {
         this.projectContactId = projectContactId;
     }
 
-    public int getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 
