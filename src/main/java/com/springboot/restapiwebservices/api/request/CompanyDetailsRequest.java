@@ -1,4 +1,4 @@
-package com.springboot.restapiwebservices.request;
+package com.springboot.restapiwebservices.api.request;
 
 import lombok.Data;
 

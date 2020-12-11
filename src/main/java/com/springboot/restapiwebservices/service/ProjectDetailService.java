@@ -1,7 +1,5 @@
 package com.springboot.restapiwebservices.service;
 
-import com.springboot.restapiwebservices.model.CompanyDetailsModel;
-import com.springboot.restapiwebservices.model.ProjectContactModel;
 import com.springboot.restapiwebservices.model.ProjectDetailsModel;
 import com.springboot.restapiwebservices.repository.ProjectDetailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.springboot.restapiwebservices.service.NoRecordFoundException;
-
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProjectDetailService {

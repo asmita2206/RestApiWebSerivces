@@ -1,11 +1,8 @@
-package com.springboot.restapiwebservices.controller;
+package com.springboot.restapiwebservices.api.controller;
 
 import com.springboot.restapiwebservices.model.AddressModel;
-import com.springboot.restapiwebservices.model.PurchaseOrderModel;
 import com.springboot.restapiwebservices.repository.AddressRepo;
 import com.springboot.restapiwebservices.service.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +14,7 @@ import java.util.List;
 @RequestMapping("/rest/Address")
 public class AddressController {
 
-    @Autowired
     AddressRepo addressRepo;
-    @Autowired
     AddressService addressService;
 
     @PostMapping

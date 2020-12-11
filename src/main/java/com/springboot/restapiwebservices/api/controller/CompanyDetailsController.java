@@ -1,34 +1,23 @@
-package com.springboot.restapiwebservices.controller;
+package com.springboot.restapiwebservices.api.controller;
 
-import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import com.springboot.restapiwebservices.model.CompanyDetailsModel;
-import com.springboot.restapiwebservices.model.ProjectDetailsModel;
 import com.springboot.restapiwebservices.repository.CompanyDetailsRepo;
-import com.springboot.restapiwebservices.request.CompanyDetailsRequest;
+import com.springboot.restapiwebservices.api.request.CompanyDetailsRequest;
 import com.springboot.restapiwebservices.service.CompanyDetailService;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/CompanyDetails")
 public class CompanyDetailsController {
 
-    @Autowired
     CompanyDetailsRepo companyDetailsRepo;
-    @Autowired
     CompanyDetailService companyDetailService;
 
     @PostMapping

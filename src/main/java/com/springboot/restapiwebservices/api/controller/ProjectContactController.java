@@ -1,19 +1,12 @@
-package com.springboot.restapiwebservices.controller;
+package com.springboot.restapiwebservices.api.controller;
 
 
-import com.springboot.restapiwebservices.model.CompanyDetailsModel;
 import com.springboot.restapiwebservices.model.ProjectContactModel;
-import com.springboot.restapiwebservices.model.ProjectDetailsModel;
 import com.springboot.restapiwebservices.repository.ProjectContactRepo;
-import com.springboot.restapiwebservices.service.NoRecordFoundException;
 import com.springboot.restapiwebservices.service.ProjectContactService;
-import com.springboot.restapiwebservices.service.ProjectDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,9 +15,7 @@ import java.util.List;
 @RequestMapping("/rest/ProjectContact")
 public class ProjectContactController {
 
-    @Autowired
     ProjectContactRepo projectContactRepo;
-    @Autowired
     ProjectContactService projectContactService;
 
     @PostMapping

@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 public class ProjectContactService {
 
-    @Autowired
     ProjectContactRepo projectContactRepo;
 
     public List<ProjectContactModel> insertProjectContact(List<ProjectContactModel> projectContactModel) {

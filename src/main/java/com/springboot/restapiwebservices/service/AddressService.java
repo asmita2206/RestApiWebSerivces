@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 public class AddressService {
 
-    @Autowired
     AddressRepo addressRepo;
 
     public List<AddressModel> getAddressBy(int projectId) {

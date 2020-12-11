@@ -1,25 +1,20 @@
-package com.springboot.restapiwebservices.controller;
+package com.springboot.restapiwebservices.api.controller;
 
-import com.springboot.restapiwebservices.model.ProjectContactModel;
 import com.springboot.restapiwebservices.model.PurchaseOrderModel;
 import com.springboot.restapiwebservices.repository.PurchaseOrderRepo;
 import com.springboot.restapiwebservices.service.PurchaseOrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/PurchaseOrder")
 public class PurchaseOrderController {
 
-    @Autowired
     PurchaseOrderRepo purchaseOrderRepo;
-    @Autowired
     PurchaseOrderService purchaseOrderService;
 
     @PostMapping

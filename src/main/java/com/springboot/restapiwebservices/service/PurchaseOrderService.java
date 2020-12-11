@@ -13,7 +13,6 @@ import java.util.Optional;
 @Service
 public class PurchaseOrderService {
 
- @Autowired
     PurchaseOrderRepo purchaseOrderRepo;
 
     public List<PurchaseOrderModel> getOrderBy(int projectId) {
