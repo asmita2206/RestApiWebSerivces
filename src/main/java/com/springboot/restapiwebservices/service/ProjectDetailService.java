@@ -1,9 +1,11 @@
 package com.springboot.restapiwebservices.service;
 
 import com.springboot.restapiwebservices.constants.StringConstants;
+import com.springboot.restapiwebservices.exception.NoRecordFoundException;
 import com.springboot.restapiwebservices.model.ProjectDetailsModel;
 import com.springboot.restapiwebservices.repository.ProjectDetailRepo;
 import com.springboot.restapiwebservices.api.controller.request.ProjectDetailRequest;
+import com.springboot.restapiwebservices.response.ProjectDetailResponse;
 import com.springboot.restapiwebservices.utils.ProjectDetailsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +36,7 @@ public class ProjectDetailService {
     }
 
 
-    public List<ProjectDetailsModel> getDetailsby(String companyId) {
+   /* public List<ProjectDetailsModel> getDetailsby(String companyId) {
         List<ProjectDetailsModel> projectDetailsModels=projectDetailRepo.findByCompanyId(companyId);
 
         if(!projectDetailsModels.isEmpty())
@@ -43,53 +45,51 @@ public class ProjectDetailService {
             ResponseEntity.status(HttpStatus.NOT_FOUND);
         return projectDetailsModels;
     }
+*/
+    public ProjectDetailsModel getDetails(String projectId) throws NoRecordFoundException {
+       ProjectDetailsModel projectDetailsModels = projectDetailRepo.findByProjectId(projectId).orElseThrow(()->{
+           return new NoRecordFoundException("no_Id_forund :" +projectId);
+       });
 
-    public ProjectDetailsModel getDetails(String projectId) {
-       ProjectDetailsModel projectDetailsModels = projectDetailRepo.findByProjectId(projectId);
-
-      if(projectDetailsModels!=null)
-        return projectDetailsModels;
-
-        else
-        ResponseEntity.status(HttpStatus.NOT_FOUND);
         return projectDetailsModels;
     }
 
 
-    public void deleteProjectDetails(String projectId) {
+    public ProjectDetailResponse deleteProjectDetails(String projectId) throws NoRecordFoundException {
 
-        ProjectDetailsModel projectDetailsModels = projectDetailRepo.findByProjectId(projectId);
+        ProjectDetailsModel projectDetailsModels = projectDetailRepo.findByProjectId(projectId).orElseThrow(()->{
+            return new NoRecordFoundException("no_Id_forund :" +projectId);
+        });
+        ProjectDetailResponse projectDetailResponse=new ProjectDetailResponse(projectId,true);
 
-        if (projectDetailsModels != null) {
             projectDetailsModels.getProjectId();
             projectDetailRepo.delete(projectDetailsModels);
-        }
+            return projectDetailResponse;
+
     }
 
-    public ResponseEntity<ProjectDetailsModel> updateOrsave(String companyId, ProjectDetailRequest projectDetailRequest) {
+    public ProjectDetailsModel updateOrsave(String companyId, ProjectDetailRequest projectDetailRequest) throws NoRecordFoundException {
 
-        ProjectDetailsModel projectDetailsModel1=projectDetailRepo.findBycompanyId(companyId);
-        if(projectDetailsModel1!=null) {
+        ProjectDetailsModel projectDetailsModel1=projectDetailRepo.findBycompanyId(companyId).orElseThrow(()->{
+            return new NoRecordFoundException("NO_Id_found" +companyId);
+        });
+
             projectDetailsModel1.setProjectName(projectDetailRequest.getProjectName());
             projectDetailsModel1.setClientName(projectDetailRequest.getClientName());
             projectDetailsModel1.getProjectId();
-            return new ResponseEntity<>(projectDetailRepo.save(projectDetailsModel1), HttpStatus.OK);
-        } else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return projectDetailRepo.save(projectDetailsModel1);
     }
 
-    public ResponseEntity<ProjectDetailsModel> updateOrsaveBy(String projectId, ProjectDetailRequest projectDetailRequest) {
+    public ProjectDetailsModel updateOrsaveBy(String projectId, ProjectDetailRequest projectDetailRequest) throws NoRecordFoundException {
 
-        ProjectDetailsModel projectDetailsModel1 = projectDetailRepo.findByProjectId(projectId);
+        ProjectDetailsModel projectDetailsModel1 = projectDetailRepo.findByProjectId(projectId).orElseThrow(()->{
+            return new NoRecordFoundException("no_Id_forund :" +projectId);
+        });
 
-        if (projectDetailsModel1 != null) {
             projectDetailsModel1.setProjectName(projectDetailRequest.getProjectName());
             projectDetailsModel1.setClientName(projectDetailRequest.getClientName());
             projectDetailsModel1.getCompanyId();
-            return new ResponseEntity<>(projectDetailRepo.save(projectDetailsModel1), HttpStatus.OK);
-
-        } else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return projectDetailRepo.save(projectDetailsModel1);
 
     }
 }

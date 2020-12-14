@@ -12,9 +12,9 @@ import java.util.UUID;
 @Repository
 public interface ProjectDetailRepo extends JpaRepository<ProjectDetailsModel,String> {
 
-   ProjectDetailsModel findByProjectId(String projectId);
+  Optional<ProjectDetailsModel> findByProjectId(String projectId);
     List<ProjectDetailsModel> findByprojectId(String projectId);
 
     List<ProjectDetailsModel> findByCompanyId(String companyId);
-    ProjectDetailsModel findBycompanyId(String companyId);
+    Optional<ProjectDetailsModel> findBycompanyId(String companyId);
 }

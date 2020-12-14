@@ -21,7 +21,7 @@ public class PurchaseOrderService {
     @Autowired
     PurchaseOrderRepo purchaseOrderRepo;
 
-    public List<PurchaseOrderModel> getOrderBy(String projectId) {
+   /* public List<PurchaseOrderModel> getOrderBy(String projectId) {
         List<PurchaseOrderModel> purchaseOrderModels=purchaseOrderRepo.findByProjectId(projectId);
 
         if(!purchaseOrderModels.isEmpty())
@@ -29,15 +29,15 @@ public class PurchaseOrderService {
         else
             ResponseEntity.status(HttpStatus.NOT_FOUND);
             return purchaseOrderModels;
-    }
+    }*/
 
-    public ResponseEntity<PurchaseOrderModel> getOrderById(int purchaseOrderId) throws NoRecordFoundException {
+    public PurchaseOrderModel getOrderById(int purchaseOrderId) throws NoRecordFoundException {
 
         PurchaseOrderModel purchaseOrderModel = purchaseOrderRepo.findByPurchaseOrderId(purchaseOrderId).orElseThrow(() -> {
             return new NoRecordFoundException("NO_Id_available {}" + purchaseOrderId);
         });
 
-        return new ResponseEntity(purchaseOrderModel, HttpStatus.OK);
+        return purchaseOrderModel;
     }
 
     public PurchaseOrderModel insertOrder(PurchaseOrderRequest purchaseOrderRequest) {

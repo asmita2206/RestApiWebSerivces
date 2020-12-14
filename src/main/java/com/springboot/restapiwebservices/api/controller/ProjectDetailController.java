@@ -1,8 +1,10 @@
 package com.springboot.restapiwebservices.api.controller;
 
+import com.springboot.restapiwebservices.exception.NoRecordFoundException;
 import com.springboot.restapiwebservices.model.ProjectDetailsModel;
 import com.springboot.restapiwebservices.repository.ProjectDetailRepo;
 import com.springboot.restapiwebservices.api.controller.request.ProjectDetailRequest;
+import com.springboot.restapiwebservices.response.ProjectDetailResponse;
 import com.springboot.restapiwebservices.service.ProjectDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,41 +33,40 @@ public class ProjectDetailController {
 
   }
 
-    @GetMapping("/get/{projectId}")
-    public ProjectDetailsModel getDetails(@PathVariable("projectId") String projectId)  {
+    @GetMapping("/{projectId}")
+    public ProjectDetailsModel getDetails(@PathVariable("projectId") String projectId) throws NoRecordFoundException {
 
         return projectDetailService.getDetails(projectId);
     }
-
-        @GetMapping("/{companyId}")
+/*
+        @GetMapping("/get/{companyId}")
         public List<ProjectDetailsModel> getDetailsby(@PathVariable("companyId")  String companyId) {
 
             return projectDetailService.getDetailsby(companyId);
 
-        }
+        }*/
 
 
     @DeleteMapping("/{projectId}")
-    public String deleteProjectDetails(@PathVariable("projectId") String projectId) {
+    public ProjectDetailResponse deleteProjectDetails(@PathVariable("projectId") String projectId) throws NoRecordFoundException {
 
-        projectDetailService.deleteProjectDetails(projectId);
-        return "Your {projectId} record is deleted successfully !!";
+       return projectDetailService.deleteProjectDetails(projectId);
+       // return "Your {projectId} record is deleted successfully !!";
 
     }
 
 
     @PutMapping("/{companyId}")
-    public ResponseEntity<ProjectDetailsModel> updateOrsave(@PathVariable("companyId") String companyId, @Valid @RequestBody ProjectDetailRequest projectDetailRequest){
+    public ProjectDetailsModel updateOrsave(@PathVariable("companyId") String companyId, @Valid @RequestBody ProjectDetailRequest projectDetailRequest) throws NoRecordFoundException {
 
-       ResponseEntity< ProjectDetailsModel> projectDetailsModel1=projectDetailService.updateOrsave(companyId,projectDetailRequest);
-        return projectDetailsModel1;
+      return projectDetailService.updateOrsave(companyId,projectDetailRequest);
+
     }
 
     @PutMapping("/update/{projectId}")
-    public ResponseEntity<ProjectDetailsModel> updateOrsaveBy(@PathVariable("projectId") String projectId,@Valid @RequestBody ProjectDetailRequest projectDetailRequest) {
+    public ProjectDetailsModel updateOrsaveBy(@PathVariable("projectId") String projectId,@Valid @RequestBody ProjectDetailRequest projectDetailRequest) throws NoRecordFoundException {
+         return projectDetailService.updateOrsaveBy(projectId,projectDetailRequest);
 
-        ResponseEntity< ProjectDetailsModel> projectDetailsModel1=projectDetailService.updateOrsaveBy(projectId,projectDetailRequest);
-        return projectDetailsModel1;
 
     }
 }

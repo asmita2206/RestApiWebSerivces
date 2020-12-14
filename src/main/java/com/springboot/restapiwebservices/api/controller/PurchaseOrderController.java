@@ -29,13 +29,13 @@ public class PurchaseOrderController {
             return purchaseOrderModels;
     }
 
-    @GetMapping("/get/{projectId}")
+   /* @GetMapping("/get/{projectId}")
     public List<PurchaseOrderModel> getOrder(@PathVariable("projectId") String projectId){
         return purchaseOrderService.getOrderBy(projectId);
     }
-
+*/
     @GetMapping("/{purchaseOrderId}")
-    public ResponseEntity<PurchaseOrderModel> getOrderById(@PathVariable("purchaseOrderId") int purchaseOrderId) throws NoRecordFoundException {
+    public PurchaseOrderModel getOrderById(@PathVariable("purchaseOrderId") int purchaseOrderId) throws NoRecordFoundException {
         return purchaseOrderService.getOrderById(purchaseOrderId);
     }
 
@@ -44,9 +44,11 @@ public class PurchaseOrderController {
     public PurchaseOrderResponse deletePurchaseOrder(@PathVariable("purchaseOrderId") int purchaseOrderId) throws NoRecordFoundException {
 
        PurchaseOrderResponse purchaseOrderResponse= purchaseOrderService.deletePurchaseOrder(purchaseOrderId);
-       if(purchaseOrderResponse!=null)
-       purchaseOrderResponse.getPurchaseOrderIdDeleted();
+
        return purchaseOrderResponse;
+      /* if(purchaseOrderResponse!=null)
+       purchaseOrderResponse.getPurchaseOrderIdDeleted();
+       return purchaseOrderResponse;*/
       // "Your {purchaseOrderId} record is deleted successfully !!";
        /* PurchaseOrderResponse purchaseOrderResponse=new PurchaseOrderResponse();
         purchaseOrderResponse.getPurchaseOrderId();*/
